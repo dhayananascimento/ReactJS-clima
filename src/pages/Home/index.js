@@ -1,13 +1,18 @@
-import "./styles.css";
-import Card from "../../components/Card";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./styles.css";
+
+import Card from "../../components/Card";
+import Loading from "../../components/Loading";
 
 function Home() {
-  const [forecastData, setForecastData] = useState(false);
+  const [forecastData, setForecastData] = useState([]);
   const [currentData, setCurrentData] = useState(false);
 
+  const [isloading, setIsloading] = useState(false);
+
   async function getWeather(latitude, longitude) {
+    setIsloading(true);
     let params = {
       params: {
         lang: "pt_br",
@@ -30,10 +35,23 @@ function Home() {
       );
 
       setCurrentData(current.data);
-      setForecastData(forecast.data);
+
+      let tam = forecast.data.list.length;
+      let newForecast = [];
+
+      for (let i = 0; i < tam; i += 8) {
+        newForecast.push({
+          city: forecast.data.city,
+          list: forecast.data.list.slice(i, i + 8),
+        });
+      }
+
+      setForecastData(newForecast);
     } catch (error) {
       alert("Algo deu errado :(");
     }
+
+    setIsloading(false);
   }
 
   function getGeolocation() {
@@ -53,14 +71,29 @@ function Home() {
     getGeolocation();
   }, []);
 
-  return (
-    <div className="container">
-      <h1 className="title">CLima</h1>
-      <div className="card-container">
-        <Card />
+  if (isloading) {
+    return (
+      <div className="home-container">
+        <h1 className="home-title">Clima</h1>
+        <div className="home-card-container">
+          <Loading />
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="home-container">
+        <h1 className="home-title">Clima</h1>
+        <div className="home-card-container">
+          <Card type="current" data={currentData} />
+
+          {forecastData.map((item, index) => {
+            return <Card key={index} type="forecast" data={item} />;
+          })}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Home;
