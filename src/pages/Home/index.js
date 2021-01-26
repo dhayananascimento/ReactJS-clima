@@ -9,7 +9,7 @@ function Home() {
   const [forecastData, setForecastData] = useState([]);
   const [currentData, setCurrentData] = useState(false);
 
-  const [isloading, setIsloading] = useState(false);
+  const [isloading, setIsloading] = useState(true);
 
   async function getWeather(latitude, longitude) {
     setIsloading(true);
@@ -34,8 +34,6 @@ function Home() {
         params
       );
 
-      setCurrentData(current.data);
-
       let tam = forecast.data.list.length;
       let newForecast = [];
 
@@ -46,6 +44,7 @@ function Home() {
         });
       }
 
+      setCurrentData(current.data);
       setForecastData(newForecast);
     } catch (error) {
       alert("Algo deu errado :(");
@@ -54,8 +53,8 @@ function Home() {
     setIsloading(false);
   }
 
-  function getGeolocation() {
-    navigator.geolocation.getCurrentPosition(
+  async function getGeolocation() {
+    await navigator.geolocation.getCurrentPosition(
       function (position) {
         let latitude = position.coords.latitude;
         let longitude = position.coords.longitude;
@@ -63,6 +62,7 @@ function Home() {
       },
       function () {
         alert("Você precisa habilitar sua localização");
+        return;
       }
     );
   }
@@ -74,10 +74,7 @@ function Home() {
   if (isloading) {
     return (
       <div className="home-container">
-        <h1 className="home-title">Clima</h1>
-        <div className="home-card-container">
-          <Loading />
-        </div>
+        <Loading />
       </div>
     );
   } else {

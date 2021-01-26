@@ -1,7 +1,37 @@
 .card-container {
-    width: 100%;
-    height: 400px;
-    margin: 20px 10px;
-    max-width: 350px;
-    background-color: #007ea7;
+  width: 250px;
+  height: 300px;
+  padding: 10px;
+  margin: 20px 10px;
+  border-radius: 10px;
+  color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 20px 20px 40px rgba(6, 190, 182, 0.5);
+}
+
+.forecast-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  overflow-x: scroll;
+}
+
+.forecast-container-time {
+  padding: 10px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.forecast-container-time:not(:nth-child(1)) {
+  margin-left: 15px;
 }
