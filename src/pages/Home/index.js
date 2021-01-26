@@ -9,10 +9,10 @@ function Home() {
   const [forecastData, setForecastData] = useState([]);
   const [currentData, setCurrentData] = useState(false);
 
-  const [isloading, setIsloading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function getWeather(latitude, longitude) {
-    setIsloading(true);
+    setIsLoading(true);
     let params = {
       params: {
         lang: "pt_br",
@@ -50,7 +50,7 @@ function Home() {
       alert("Algo deu errado :(");
     }
 
-    setIsloading(false);
+    setIsLoading(false);
   }
 
   async function getGeolocation() {
@@ -61,7 +61,7 @@ function Home() {
         getWeather(latitude, longitude);
       },
       function () {
-        alert("Você precisa habilitar sua localização");
+        setIsLoading(false);
         return;
       }
     );
@@ -71,13 +71,20 @@ function Home() {
     getGeolocation();
   }, []);
 
-  if (isloading) {
+  if (isLoading) {
     return (
       <div className="home-container">
         <Loading />
       </div>
     );
-  } else {
+  } else if(!isLoading && !currentData){
+    return (
+      <div className="home-container">
+        <h1>Localização não está habilitada :(</h1>
+        <p>Habilite a localização e recarregue a página.</p>
+      </div>
+    )
+  }else {
     return (
       <div className="home-container">
         <h1 className="home-title">Clima</h1>
