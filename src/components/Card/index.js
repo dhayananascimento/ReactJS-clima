@@ -1,45 +1,33 @@
 import React from "react";
 import "./styles.css";
 
-function Card({ type, data }) {
-  if (type === "current") {
-    return (
-      <div className="card-container">
-        <p className="card-temp">
-          {Math.round(data.main.temp)}
-          <span>°C</span>
-        </p>
-        <p className="card-location">
-          {data.name}, {data.sys.country}
-        </p>
-
-        <p className="card-feels">
-          Sensação: {Math.round(data.main.feels_like)}°C
-        </p>
-        <p className="card-description">{data.weather[0].description}</p>
-      </div>
-    );
-  }
-
-  const date = data.list?.[0].dt_txt.split(" ", 1);
-
+function Card({ data }) {
   return (
     <div className="card-container">
-      <p>{date}</p>
       <p>
-        {data.city.name}, {data.city.country}
+        temp:
+        {Math.round(data.temp.day)}
+        <span>°C</span>
       </p>
 
-      <div className="forecast-container">
-        {data.list.map((item, index) => {
-          return (
-            <div key={index} className="forecast-container-time">
-              <p>{item.dt_txt.split(" ")[1]}</p>
-              <p>{Math.round(item.main.temp)}°C</p>
-            </div>
-          );
-        })}
-      </div>
+      <p>
+        feels_like:
+        {Math.round(data.feels_like.day)}
+        <span>°C</span>
+      </p>
+
+      <p>max: {data.temp.max}</p>
+      <p>min: {data.temp.min}</p>
+
+      <p>dt: {new Date(data.dt * 1000).toLocaleDateString()}</p>
+      <p>humidity: {data.humidity}%</p>
+      <p>sunrise: {new Date(data.sunrise * 1000).toLocaleTimeString()}</p>
+      <p>sunset: {new Date(data.sunset * 1000).toLocaleTimeString()}</p>
+      <p>{data.weather[0].description}</p>
+      <img
+        src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`}
+        alt={data.weather[0].description}
+      ></img>
     </div>
   );
 }

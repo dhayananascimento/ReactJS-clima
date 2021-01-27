@@ -17,21 +17,3 @@
   border-left: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 20px 20px 40px rgba(6, 190, 182, 0.5);
 }
-
-.forecast-container {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-  overflow-x: scroll;
-}
-
-.forecast-container-time {
-  padding: 10px;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-.forecast-container-time:not(:nth-child(1)) {
-  margin-left: 15px;
-}

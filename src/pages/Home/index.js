@@ -6,9 +6,7 @@ import Card from "../../components/Card";
 import Loading from "../../components/Loading";
 
 function Home() {
-  const [forecastData, setForecastData] = useState([]);
-  const [currentData, setCurrentData] = useState(false);
-
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   async function getWeather(latitude, longitude) {
@@ -19,33 +17,17 @@ function Home() {
         units: "metric",
         lat: latitude,
         lon: longitude,
+        exclude: "minutely, hourly, alerts",
         appid: process.env.REACT_APP_WEATHER_KEY,
       },
     };
 
     try {
-      let current = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather`,
+      let weather = await axios.get(
+        `https://api.openweathermap.org/data/2.5/onecall`,
         params
       );
-
-      let forecast = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast`,
-        params
-      );
-
-      let tam = forecast.data.list.length;
-      let newForecast = [];
-
-      for (let i = 0; i < tam; i += 8) {
-        newForecast.push({
-          city: forecast.data.city,
-          list: forecast.data.list.slice(i, i + 8),
-        });
-      }
-
-      setCurrentData(current.data);
-      setForecastData(newForecast);
+      setData(weather.data.daily);
     } catch (error) {
       alert("Algo deu errado :(");
     }
@@ -77,21 +59,19 @@ function Home() {
         <Loading />
       </div>
     );
-  } else if(!isLoading && !currentData){
+  } else if (!isLoading && data.length === 0) {
     return (
       <div className="home-container">
         <h1>Localização não está habilitada :(</h1>
         <p>Habilite a localização e recarregue a página.</p>
       </div>
-    )
-  }else {
+    );
+  } else {
     return (
       <div className="home-container">
         <h1 className="home-title">Clima</h1>
         <div className="home-card-container">
-          <Card type="current" data={currentData} />
-
-          {forecastData.map((item, index) => {
+          {data.map((item, index) => {
             return <Card key={index} type="forecast" data={item} />;
           })}
         </div>
