@@ -1,8 +1,13 @@
 .home-container {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(to right top, #06beb6, #48b1bf);
   color: #fff;
+
+  background-image: url("../../assets/images/fundo.jpg");
+  background-color: black;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   display: flex;
   align-items: center;

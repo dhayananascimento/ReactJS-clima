@@ -6,7 +6,7 @@ import Card from "../../components/Card";
 import Loading from "../../components/Loading";
 
 function Home() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   async function getWeather(latitude, longitude) {
@@ -27,7 +27,10 @@ function Home() {
         `https://api.openweathermap.org/data/2.5/onecall`,
         params
       );
-      setData(weather.data.daily);
+      setData({
+        current: weather.data.current,
+        forecast: weather.data.daily.slice(1),
+      });
     } catch (error) {
       alert("Algo deu errado :(");
     }
@@ -59,7 +62,7 @@ function Home() {
         <Loading />
       </div>
     );
-  } else if (!isLoading && data.length === 0) {
+  } else if (!isLoading && !data) {
     return (
       <div className="home-container">
         <h1>Localização não está habilitada :(</h1>
@@ -68,10 +71,14 @@ function Home() {
     );
   } else {
     return (
-      <div className="home-container">
+      <div
+        className="home-container"
+        title="Photo by Federico Bottos on Unsplash"
+      >
         <h1 className="home-title">Clima</h1>
         <div className="home-card-container">
-          {data.map((item, index) => {
+          <Card type="current" data={data.current} />
+          {data.forecast.map((item, index) => {
             return <Card key={index} type="forecast" data={item} />;
           })}
         </div>

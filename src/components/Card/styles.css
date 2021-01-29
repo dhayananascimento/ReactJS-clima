@@ -1,19 +1,73 @@
 .card-container {
-  width: 250px;
-  height: 300px;
+  width: 280px;
+  min-height: 350px;
   padding: 10px;
   margin: 20px 10px;
   border-radius: 10px;
   color: #fff;
+  text-transform: capitalize;
 
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(3px);
   background-color: rgba(255, 255, 255, 0.15);
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   border-left: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 20px 20px 40px rgba(6, 190, 182, 0.5);
+  box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.card-container > p {
+  opacity: 0.4;
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.card-weather-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-weather-container > p {
+  font-size: 42px;
+}
+
+.card-weather {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 5px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.card-details {
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card-details p {
+  margin: 10px;
+  text-align: left;
+}
+
+.card-sun {
+  display: flex;
+  align-items: center;
+  text-align: left;
+
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
 }
